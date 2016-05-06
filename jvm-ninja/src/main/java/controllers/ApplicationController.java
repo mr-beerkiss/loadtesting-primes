@@ -24,17 +24,19 @@ import com.google.inject.Singleton;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import java.math.BigInteger;
+
 @Singleton
 public class ApplicationController {
 
-    protected long nextPrime = 1;
+    protected int nextPrime = 1;
     //protected HashSet<Long> primes = new HashSet<Long>(50);
-    protected Set<Long> primes = ConcurrentHashMap.newKeySet();
+    protected Set<Integer> primes = ConcurrentHashMap.newKeySet();
     private static final int LOOP_LIMIT = 100000;
-    private static final long[] PRIME_DIVISORS = { 2L, 3L, 5L, 7L };
+    private static final int[] PRIME_DIVISORS = { 2, 3, 5, 7 };
 
 
-    public int indexOf(long[] array, long value) {
+    public int indexOf(int[] array, int value) {
         int index = -1;
 
         for ( int i=0; i < array.length; i++ ) {
@@ -53,12 +55,12 @@ public class ApplicationController {
         boolean foundPrime = false;
 
         while ( !foundPrime && counter < LOOP_LIMIT ) {
-            nextPrime += 1L;
+            nextPrime += 1;
             counter += 1;
             foundPrime = true;
 
-            if ( nextPrime != 1L && indexOf(PRIME_DIVISORS, nextPrime) == -1 ) {
-                for ( Long l : primes ) {
+            if ( nextPrime != 1 && indexOf(PRIME_DIVISORS, nextPrime) == -1 ) {
+                for ( int l : primes ) {
                     if ( nextPrime % l == 0 ) {
                         foundPrime = false;
                         break;

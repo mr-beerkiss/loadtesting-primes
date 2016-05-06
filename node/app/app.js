@@ -30,7 +30,7 @@ if ( cluster.isMaster ) {
     let primes = new Set();
 
  
-    nunjucks.configure('views', {
+    nunjucks.configure('app/views', {
         autoescape: true,
         express: app
     });
@@ -64,7 +64,9 @@ if ( cluster.isMaster ) {
         if ( !counterExceeded ) {
             //console.log(`next prime found was ${nextPrime} by worker ${cluster.worker.id}`);
             primes.add(nextPrime);
-            res.render('index.html', { primes: [...primes] });
+            // Docker Node doesn't like the Spread Operator :(
+            //res.render('index.html', { primes: [...primes] });
+            res.render('index.html', { primes: Array.from(primes) });
         } else {
             //console.log('counter exceeded');
             res.status(201).render('index.html');
